@@ -18,7 +18,7 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap()
     this->setHitPoints(100);
     this->setEnergyPoints(50);
     this->setAttackDamage(20);
-    std::cout << Y << "ScavTrap " << this->name << " created!" << RST << std::endl; 
+    std::cout << Y << "ScavTrap " << name << " created!" << RST << std::endl; 
 }
 
 ScavTrap::~ScavTrap() {
@@ -28,7 +28,7 @@ ScavTrap::~ScavTrap() {
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other.getName())
 {
     *this = other;
-    std::cout << Y << "ScavTrap " << this->name << " created!" << RST << std::endl; 
+    std::cout << Y << "ScavTrap " << other.getName() << " created!" << RST << std::endl; 
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
@@ -44,11 +44,13 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 }	
 
 
-void ScavTrap::attack(const std::string &target) {
+void ScavTrap::attack(const std::string &target)
+{
     std::cout << RED << "ScavTrap " << Name << " attacks " << target 
               << " with a different strategy, causing " << AttackDamage << " points of damage!" << RST << std::endl;
 }
 
-void ScavTrap::guardGate() {
-    std::cout << Y << "ScavTrap " << Name << " is now in Gate keeper mode!" << RST << std::endl;
+void ScavTrap::guardGate()
+{
+    std::cout << B << "ScavTrap " << Name << " is now in Gate keeper mode!" << RST << std::endl;
 }

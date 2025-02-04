@@ -17,6 +17,6 @@ int main()
     ScavTrap scav("Serena");
     scav.attack("Target1");
     scav.guardGate();
-
+    
     return 0;
 }

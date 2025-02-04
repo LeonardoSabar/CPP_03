@@ -14,11 +14,6 @@
 
 ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
-    if (HitPoints != 10 || EnergyPoints != 10 || AttackDamage != 0)
-    {
-        std::cout << O << "Invalid points for ClapTrap " << this->Name << "!" << RST << std::endl;
-        return;
-    }
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
 }
 
@@ -90,6 +85,11 @@ void ClapTrap::setAttackDamage(int attackDamage)
 
 void ClapTrap::attack(const std::string &target)
 {
+    if (HitPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << Name << " cannot attack, because it is dead!" << RST << std::endl;
+        return;
+    }
     std::cout << P << "ClapTrap " << this->Name << " attacks " << target 
               << ", causing " << this->AttackDamage << " points of damage!" << RST << std::endl;
     this->HitPoints--;
@@ -153,6 +153,7 @@ void ClapTrap::beRepaired(unsigned int amount)
 }
 
 
-ClapTrap::~ClapTrap() {
+ClapTrap::~ClapTrap()
+{
     std::cout << O << "ClapTrap " << this->Name << "'s body was destroyed!" << RST << std::endl;
 }
