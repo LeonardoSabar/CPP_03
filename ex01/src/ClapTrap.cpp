@@ -12,6 +12,9 @@
 
 #include "../includes/ClapTrap.hpp"
 
+
+// ########################  Constructor and Destructor ########################
+
 ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
@@ -24,10 +27,18 @@ ClapTrap::ClapTrap(const ClapTrap &other)
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
 }
 
-ClapTrap::ClapTrap()
+ClapTrap::ClapTrap() : Name("Ordinary"), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
-    std::cout << Y << "A Ordinary ClapTrap was created!" << RST << std::endl;
+    std::cout << Y << "A ClapTrap " << this->Name << " was created!" << RST << std::endl;
 }
+
+ClapTrap::~ClapTrap()
+{
+    std::cout << O << "ClapTrap " << this->Name << "'s body was destroyed!" << RST << std::endl;
+}
+
+
+// ##########################  Operator Overloadings ##########################
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 {
@@ -41,6 +52,78 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
     return *this;
 }
 
+
+// #############################  Member Functions #############################
+
+void ClapTrap::attack(const std::string &target)
+{
+    if (HitPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << Name << " cannot attack, because it is dead!" << RST << std::endl;
+        return;
+    }
+    std::cout << P << "ClapTrap " << this->Name << " attacks " << target 
+              << ", causing " << this->AttackDamage << " points of damage!" << RST << std::endl;
+    this->HitPoints--;
+}
+
+void ClapTrap::takeDamage(unsigned int amount)
+{
+    if (amount > INT_MAX)
+    {
+        std::cout << RED << "Invalid damage amount!" << RST << std::endl;
+        return;
+    }
+
+    if (this->HitPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << this->Name << " received " << amount 
+            << " points of damage, but it is already dead!" << RST << std::endl;
+        return;
+    }
+
+    if (amount >= this->HitPoints)
+    {
+        std::cout << RED << "ClapTrap " << this->Name << " received " << amount 
+            << " points of damage and died!" << RST << std::endl;
+        this->HitPoints = 0;
+        return;
+    }
+
+    this->HitPoints -= amount;
+    std::cout << RED << "ClapTrap " << this->Name << " took " 
+        << amount << " points of damage!" << RST << std::endl;
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+
+    this->HitPoints--;
+    if (amount > INT_MAX)
+    {
+        std::cout << M << "Invalid repair amount!" << RST << std::endl;
+        return;
+    }
+
+    if (this->HitPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << this->Name 
+            << " cannot be repaired, because it is dead!" << RST << std::endl;
+        return;
+    }
+
+    this->HitPoints += amount;
+    if (this->HitPoints > 10)
+    {
+        this->HitPoints = 10;
+    }
+
+    std::cout << G << "ClapTrap " << this->Name << " was repaired for " << amount 
+        << " hit points. And now it has " << this->HitPoints << " hit points!" << RST << std::endl;
+}
+
+
+// #############################  Getter and Setter #############################
 
 std::string ClapTrap::getName() const
 {
@@ -82,78 +165,3 @@ void ClapTrap::setAttackDamage(int attackDamage)
     this->AttackDamage = attackDamage;
 }
 
-
-void ClapTrap::attack(const std::string &target)
-{
-    if (HitPoints <= 0)
-    {
-        std::cout << M << "ClapTrap " << Name << " cannot attack, because it is dead!" << RST << std::endl;
-        return;
-    }
-    std::cout << P << "ClapTrap " << this->Name << " attacks " << target 
-              << ", causing " << this->AttackDamage << " points of damage!" << RST << std::endl;
-    this->HitPoints--;
-}
-
-
-void ClapTrap::takeDamage(unsigned int amount)
-{
-    if (amount > INT_MAX)
-    {
-        std::cout << RED << "Invalid damage amount!" << RST << std::endl;
-        return;
-    }
-
-    if (this->HitPoints <= 0)
-    {
-        std::cout << M << "ClapTrap " << this->Name << " received " << amount 
-            << " points of damage, but it is already dead!" << RST << std::endl;
-        return;
-    }
-
-    if (amount >= this->HitPoints)
-    {
-        std::cout << RED << "ClapTrap " << this->Name << " received " << amount 
-            << " points of damage and died!" << RST << std::endl;
-        this->HitPoints = 0;
-        return;
-    }
-
-    this->HitPoints -= amount;
-    std::cout << RED << "ClapTrap " << this->Name << " took " 
-        << amount << " points of damage!" << RST << std::endl;
-}
-
-
-void ClapTrap::beRepaired(unsigned int amount)
-{
-
-    this->HitPoints--;
-    if (amount > INT_MAX)
-    {
-        std::cout << M << "Invalid repair amount!" << RST << std::endl;
-        return;
-    }
-
-    if (this->HitPoints <= 0)
-    {
-        std::cout << M << "ClapTrap " << this->Name 
-            << " cannot be repaired, because it is dead!" << RST << std::endl;
-        return;
-    }
-
-    this->HitPoints += amount;
-    if (this->HitPoints > 10)
-    {
-        this->HitPoints = 10;
-    }
-
-    std::cout << G << "ClapTrap " << this->Name << " was repaired for " << amount 
-        << " hit points. And now it has " << this->HitPoints << " hit points!" << RST << std::endl;
-}
-
-
-ClapTrap::~ClapTrap()
-{
-    std::cout << O << "ClapTrap " << this->Name << "'s body was destroyed!" << RST << std::endl;
-}

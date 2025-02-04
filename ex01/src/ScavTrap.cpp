@@ -12,6 +12,9 @@
 
 #include "../includes/ScavTrap.hpp"
 
+
+// ########################  Constructor and Destructor ########################
+
 ScavTrap::ScavTrap(std::string name) : ClapTrap() 
 {
     this->setName(name);
@@ -21,7 +24,17 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap()
     std::cout << Y << "ScavTrap " << name << " created!" << RST << std::endl; 
 }
 
-ScavTrap::~ScavTrap() {
+ScavTrap::ScavTrap() : ClapTrap()
+{
+    this->setName("Ordinary");
+    this->setHitPoints(100);
+    this->setEnergyPoints(50);
+    this->setAttackDamage(20);
+    std::cout << Y << "A Ordinary ScavTrap was created!" << RST << std::endl;
+}
+
+ScavTrap::~ScavTrap()
+{
     std::cout << O << "ScavTrap " << Name << " destroyed!" << RST << std::endl;
 }
 
@@ -30,6 +43,9 @@ ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other.getName())
     *this = other;
     std::cout << Y << "ScavTrap " << other.getName() << " created!" << RST << std::endl; 
 }
+
+
+// ########################  Operator Overloadings ########################
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 {
@@ -44,13 +60,14 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &other)
 }	
 
 
-void ScavTrap::attack(const std::string &target)
-{
-    std::cout << RED << "ScavTrap " << Name << " attacks " << target 
-              << " with a different strategy, causing " << AttackDamage << " points of damage!" << RST << std::endl;
-}
+// ###########################  Member Functions ###########################
 
 void ScavTrap::guardGate()
 {
+    if (HitPoints <= 0)
+    {
+        std::cout << M << "ScavTrap " << Name << " cannot guard the gate, because it is dead!" << RST << std::endl;
+        return;
+    }
     std::cout << B << "ScavTrap " << Name << " is now in Gate keeper mode!" << RST << std::endl;
 }
