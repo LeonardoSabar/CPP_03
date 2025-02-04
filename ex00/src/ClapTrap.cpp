@@ -2,7 +2,7 @@
 
 ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
-    if (HitPoints > 10 || EnergyPoints > 10 || AttackDamage > 0)
+    if (HitPoints != 10 || EnergyPoints != 10 || AttackDamage != 0)
     {
         std::cout << O << "Invalid points for ClapTrap " << Name << "!" << RST << std::endl;
         return;
@@ -15,6 +15,7 @@ void ClapTrap::attack(const std::string &target)
 {
     std::cout << P << "ClapTrap " << Name << " attacks " << target 
               << ", causing " << AttackDamage << " points of damage!" << RST << std::endl;
+    HitPoints--;
 }
 
 
@@ -26,9 +27,10 @@ void ClapTrap::takeDamage(unsigned int amount)
         return;
     }
 
-    if (HitPoints == 0)
+    if (HitPoints <= 0)
     {
-        std::cout << M << "ClapTrap " << Name << " is already dead!" << RST << std::endl;
+        std::cout << M << "ClapTrap " << Name << " received " << amount 
+            << " points of damage, but it is already dead!" << RST << std::endl;
         return;
     }
 
@@ -49,6 +51,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 void ClapTrap::beRepaired(unsigned int amount)
 {
 
+    HitPoints--;
     if (amount > INT_MAX)
     {
         std::cout << M << "Invalid repair amount!" << RST << std::endl;
@@ -74,5 +77,5 @@ void ClapTrap::beRepaired(unsigned int amount)
 
 
 ClapTrap::~ClapTrap() {
-    std::cout << O << "ClapTrap " << Name << " destroyed!" << RST << std::endl;
+    std::cout << O << "ClapTrap " << Name << "'s body was destroyed!" << RST << std::endl;
 }
