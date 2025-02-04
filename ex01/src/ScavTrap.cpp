@@ -26,16 +26,18 @@ ScavTrap::ScavTrap(std::string name) : ClapTrap()
 
 ScavTrap::ScavTrap() : ClapTrap()
 {
-    this->setName("Ordinary");
+    this->setName("Ordinary Joe");
     this->setHitPoints(100);
     this->setEnergyPoints(50);
     this->setAttackDamage(20);
-    std::cout << Y << "A Ordinary ScavTrap was created!" << RST << std::endl;
+    std::cout << Y << "ScavTrap " << this->getName() 
+        << " created!" << RST << std::endl;
 }
 
 ScavTrap::~ScavTrap()
 {
-    std::cout << O << "ScavTrap " << Name << " destroyed!" << RST << std::endl;
+    std::cout << O << "The ScavTrap components of " << this->Name 
+        << " were destroyed!" << RST << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other.getName())

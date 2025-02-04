@@ -27,14 +27,17 @@ ClapTrap::ClapTrap(const ClapTrap &other)
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
 }
 
-ClapTrap::ClapTrap() : Name("Ordinary"), HitPoints(10), EnergyPoints(10), AttackDamage(0)
+ClapTrap::ClapTrap() : Name("Ordinary Joe"), 
+    HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
-    std::cout << Y << "A ClapTrap " << this->Name << " was created!" << RST << std::endl;
+    std::cout << Y << "ClapTrap " << this->Name 
+        << " created!" << RST << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << O << "ClapTrap " << this->Name << "'s body was destroyed!" << RST << std::endl;
+    std::cout << O << "The ClapTrap components of " << this->Name 
+        << " were destroyed!" << RST << std::endl;
 }
 
 
