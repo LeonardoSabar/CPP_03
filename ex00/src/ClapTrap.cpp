@@ -2,7 +2,7 @@
 
 ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
-    if (HitPoints > 100 || EnergyPoints > 100 || AttackDamage > 100)
+    if (HitPoints > 10 || EnergyPoints > 10 || AttackDamage > 0)
     {
         std::cout << O << "Invalid points for ClapTrap " << Name << "!" << RST << std::endl;
         return;
