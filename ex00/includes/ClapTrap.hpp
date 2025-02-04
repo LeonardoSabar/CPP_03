@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Colors.hpp"
 
+#define INT_MAX 2147483647
+
 class ClapTrap
 {
     private:
