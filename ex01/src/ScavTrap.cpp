@@ -68,8 +68,25 @@ void ScavTrap::guardGate()
 {
     if (HitPoints <= 0)
     {
-        std::cout << M << "ScavTrap " << Name << " cannot guard the gate, because it is dead!" << RST << std::endl;
+        std::cout << M << "ScavTrap " << Name << " cannot guard the gate, because they are already dead!" << RST << std::endl;
         return;
     }
     std::cout << B << "ScavTrap " << Name << " is now in Gate keeper mode!" << RST << std::endl;
+}
+
+void ScavTrap::attack(std::string const & target)
+{
+    if (this->HitPoints <= 0)
+    {
+        std::cout << M << "ScavTrap " << Name << " cannot attack, because they are already dead!" << RST << std::endl;
+        return;
+    }
+    if (this->EnergyPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << this->Name 
+            << " cannot attack, because they have no energy!" << RST << std::endl;
+        return;
+    }
+    std::cout << P << "ScavTrap " << Name << " attacks " << target 
+        << ", causing " << AttackDamage << " points of damage!" << RST << std::endl;
 }

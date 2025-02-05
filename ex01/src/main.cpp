@@ -17,6 +17,14 @@ int main()
     ScavTrap scav;
     scav.attack("Target1");
     scav.guardGate();
+    scav.takeDamage(10);
+    scav.beRepaired(5);
+    scav.takeDamage(100);
+    scav.beRepaired(100);
+    scav.beRepaired(100);
+    scav.takeDamage(101);
+    scav.attack("Target2");
+    scav.guardGate();
     
     return 0;
 }

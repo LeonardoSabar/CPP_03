@@ -12,11 +12,28 @@
 
 #include "../includes/ClapTrap.hpp"
 
+// ###########################  Static Functions ################################
+
+static void ClapTrapDraw() {
+    std::cout << B << "               " << std::endl;
+    std::cout << B << "               __    HI" << std::endl;
+    std::cout << B << "       _(\\    |"<< RST << Y << "@@" << RST 
+        << B << "|     " << std::endl;
+    std::cout << B << "      (__/\\__ \\--/ __ " << std::endl;
+    std::cout << B << "         \\___|----|  |   __ " << std::endl;
+    std::cout << B << "             \\ }{ /\\ )_ / _\\ " << std::endl;
+    std::cout << B << "             /\\__/\\ \\__O (__ " << std::endl;
+    std::cout << B << "            (--/\\--)    \\__/ " << std::endl;
+    std::cout << B << "            _)(  )(_        " << std::endl;
+    std::cout << B << "           `---''---`      " << std::endl;
+    std::cout << RST << "               " << std::endl;
+}
 
 // ########################  Constructor and Destructor ########################
 
 ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
+    ClapTrapDraw();
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
 }
 
@@ -30,6 +47,7 @@ ClapTrap::ClapTrap(const ClapTrap &other)
 ClapTrap::ClapTrap() : Name("Ordinary Joe"), 
     HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
+    ClapTrapDraw();
     std::cout << Y << "ClapTrap " << this->Name 
         << " created!" << RST << std::endl;
 }
@@ -60,14 +78,21 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 
 void ClapTrap::attack(const std::string &target)
 {
+    if (EnergyPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << this->Name 
+            << " cannot attack, because they have no energy!" << RST << std::endl;
+        return;
+    }
     if (HitPoints <= 0)
     {
-        std::cout << M << "ClapTrap " << Name << " cannot attack, because it is dead!" << RST << std::endl;
+        std::cout << M << "ClapTrap " << Name 
+            << " cannot attack, because they are dead!" << RST << std::endl;
         return;
     }
     std::cout << P << "ClapTrap " << this->Name << " attacks " << target 
               << ", causing " << this->AttackDamage << " points of damage!" << RST << std::endl;
-    this->HitPoints--;
+    this->EnergyPoints--;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
@@ -81,7 +106,7 @@ void ClapTrap::takeDamage(unsigned int amount)
     if (this->HitPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name << " received " << amount 
-            << " points of damage, but it is already dead!" << RST << std::endl;
+            << " points of damage, but they are already dead!" << RST << std::endl;
         return;
     }
 
@@ -100,8 +125,14 @@ void ClapTrap::takeDamage(unsigned int amount)
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
+    if (EnergyPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << this->Name 
+            << " cannot be repaired, because they have no energy!" << RST << std::endl;
+        return;
+    }
 
-    this->HitPoints--;
+    this->EnergyPoints--;
     if (amount > INT_MAX)
     {
         std::cout << M << "Invalid repair amount!" << RST << std::endl;
@@ -111,7 +142,7 @@ void ClapTrap::beRepaired(unsigned int amount)
     if (this->HitPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name 
-            << " cannot be repaired, because it is dead!" << RST << std::endl;
+            << " cannot be repaired, because they are already dead!" << RST << std::endl;
         return;
     }
 
@@ -122,7 +153,7 @@ void ClapTrap::beRepaired(unsigned int amount)
     }
 
     std::cout << G << "ClapTrap " << this->Name << " was repaired for " << amount 
-        << " hit points. And now it has " << this->HitPoints << " hit points!" << RST << std::endl;
+        << " hit points. And now they have " << this->HitPoints << " hit points!" << RST << std::endl;
 }
 
 
