@@ -44,7 +44,7 @@ ClapTrap::ClapTrap(const ClapTrap &other)
     std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
 }
 
-ClapTrap::ClapTrap() : Name("Ordinary Joe"), 
+ClapTrap::ClapTrap() : Name("Joe"), 
     HitPoints(10), EnergyPoints(10), AttackDamage(0)
 {
     ClapTrapDraw();
