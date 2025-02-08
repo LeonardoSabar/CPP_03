@@ -1,23 +1,36 @@
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-NAME = ClapTrap
-OBJ_DIR = obj
-SRC = main.cpp ClapTrap.cpp
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.cpp=.o))
+NAME		:= ScavTrap
+CFLAGS		:= -Wextra -Wall -Werror -std=c++98
+SRCS_PATH	:= ./src/
+.SILENT:
 
-all: $(NAME)
+HEADERS		:= -I ./includes
 
-$(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
+SRCS		:= $(addprefix $(SRCS_PATH), \
+				main.cpp \
+				ClapTrap.cpp\
+				ScavTrap.cpp\
+			)
 
-$(OBJ_DIR)/%.o: %.cpp
-	@mkdir -p $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+OBJS		:= $(SRCS:$(SRCS_PATH)%.cpp=obj/%.o)
+
+all: ${NAME}
+
+${NAME}: ${OBJS}
+	@c++ ${CFLAGS} ${HEADERS} ${OBJS} -o ${NAME}
+
+obj/%.o: ${SRCS_PATH}%.cpp | obj_dirs
+	@c++ ${CFLAGS} -c ${HEADERS} $< -o $@
+	@printf "Compiling: ${notdir $<}\n"
+
+obj_dirs:
+	@mkdir -p $(dir ${OBJS})
 
 clean:
-	rm -rf $(OBJ_DIR)
+	@rm -rf obj
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f ${NAME}
 
 re: fclean all
+
+.PHONY: all clean fclean re

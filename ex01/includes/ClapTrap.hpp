@@ -9,33 +9,33 @@
 
 class ClapTrap
 {
-    protected:
-        std::string Name;
-        int HitPoints;
-        int EnergyPoints;
-        int AttackDamage;
+	protected:
+		std::string Name;
+		int HitPoints;
+		int EnergyPoints;
+		int AttackDamage;
 
-    public:
-        ClapTrap(std::string name);
-        ClapTrap(const ClapTrap &other);
-        ClapTrap();
-        ~ClapTrap();
+	public:
+		ClapTrap(std::string name);
+		ClapTrap(const ClapTrap &other);
+		ClapTrap();
+		~ClapTrap();
 
-        void attack(const std::string &target);
-        void takeDamage(unsigned int amount);
-        void beRepaired(unsigned int amount);
+		void attack(const std::string &target);
+		void takeDamage(unsigned int amount);
+		void beRepaired(unsigned int amount);
 
-        ClapTrap &operator=(const ClapTrap &other);
+		ClapTrap &operator=(const ClapTrap &other);
 
-        std::string getName() const;
-        int getHitPoints() const;
-        int getEnergyPoints() const;
-        int getAttackDamage() const;
+		std::string getName() const;
+		int getHitPoints() const;
+		int getEnergyPoints() const;
+		int getAttackDamage() const;
 
-        void setName(std::string name);
-        void setHitPoints(int hitPoints);
-        void setEnergyPoints(int energyPoints);
-        void setAttackDamage(int attackDamage);
+		void setName(std::string name);
+		void setHitPoints(int hitPoints);
+		void setEnergyPoints(int energyPoints);
+		void setAttackDamage(int attackDamage);
 };
 
 #endif

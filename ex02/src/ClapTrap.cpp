@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 22:44:39 by leobarbo          #+#    #+#             */
-/*   Updated: 2025/02/08 10:33:39 by leobarbo         ###   ########.fr       */
+/*   Updated: 2025/02/08 10:36:07 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ ClapTrap::ClapTrap() : Name("Joe"),
 	ClapTrapDraw();
 	std::cout << Y << "ClapTrap " << this->Name
 		<< " created!" << RST << std::endl;
-}
+} 
 
 ClapTrap::~ClapTrap()
 {
