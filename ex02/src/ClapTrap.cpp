@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 22:44:11 by leobarbo          #+#    #+#             */
-/*   Updated: 2025/02/03 22:44:11 by leobarbo         ###   ########.fr       */
+/*   Created: 2025/02/03 22:44:39 by leobarbo          #+#    #+#             */
+/*   Updated: 2025/02/03 22:44:39 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,23 @@ static void ClapTrapDraw() {
     std::cout << RST << "               " << std::endl;
 }
 
+
 // ########################  Constructor and Destructor ########################
+
+ClapTrap::ClapTrap(std::string name) : Name(name), 
+    HitPoints(10), EnergyPoints(10), AttackDamage(0)
+{
+    ClapTrapDraw();
+    std::cout << Y << "ClapTrap " << this->Name 
+        << " created!" << RST << std::endl;
+}
+
+ClapTrap::ClapTrap(const ClapTrap &other)
+{
+    *this = other;
+    std::cout << Y << "ClapTrap " << this->Name 
+        << " created!" << RST << std::endl;
+}
 
 ClapTrap::ClapTrap() : Name("Joe"), 
     HitPoints(10), EnergyPoints(10), AttackDamage(0)
@@ -39,21 +55,10 @@ ClapTrap::ClapTrap() : Name("Joe"),
         << " created!" << RST << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name) : Name(name), HitPoints(10), EnergyPoints(10), AttackDamage(0)
-{
-    ClapTrapDraw();
-    std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
-}
-
-ClapTrap::ClapTrap(const ClapTrap &other)
-{
-    *this = other;
-    std::cout << Y << "ClapTrap " << this->Name << " created!" << RST << std::endl;
-}
-
 ClapTrap::~ClapTrap()
 {
-    std::cout << O << "ClapTrap " << this->Name << "'s body was destroyed!" << RST << std::endl;
+    std::cout << O << "The ClapTrap components of " << this->Name 
+        << " were destroyed!" << RST << std::endl;
 }
 
 
@@ -72,26 +77,27 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 }
 
 
-// ########################  Member Functions ########################
+// ###########################  Member Functions ###########################
 
 void ClapTrap::attack(const std::string &target)
 {
-    if (HitPoints <= 0)
-    {
-        std::cout << M << "ClapTrap " << this->Name << " cannot attack, because they are dead!" << RST << std::endl;
-        return;
-    }
     if (EnergyPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name 
             << " cannot attack, because they have no energy!" << RST << std::endl;
         return;
     }
+    if (HitPoints <= 0)
+    {
+        std::cout << M << "ClapTrap " << Name 
+            << " cannot attack, because they are dead!" << RST << std::endl;
+        return;
+    }
     std::cout << P << "ClapTrap " << this->Name << " attacks " << target 
-              << ", causing " << AttackDamage << " points of damage!" << RST << std::endl;
+              << ", causing " << this->AttackDamage 
+                << " points of damage!" << RST << std::endl;
     this->EnergyPoints--;
 }
-
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
@@ -101,29 +107,29 @@ void ClapTrap::takeDamage(unsigned int amount)
         return;
     }
 
-    if (HitPoints <= 0)
+    if (this->HitPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name << " received " << amount 
             << " points of damage, but they are already dead!" << RST << std::endl;
         return;
     }
 
-    if (amount >= HitPoints)
+    if (amount >= this->HitPoints)
     {
         std::cout << RED << "ClapTrap " << this->Name << " received " << amount 
             << " points of damage and died!" << RST << std::endl;
-        HitPoints = 0;
+        this->HitPoints = 0;
         return;
     }
 
-    HitPoints -= amount;
+    this->HitPoints -= amount;
     std::cout << RED << "ClapTrap " << this->Name << " took " 
         << amount << " points of damage!" << RST << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (this->EnergyPoints <= 0)
+    if (EnergyPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name 
             << " cannot be repaired, because they have no energy!" 
@@ -132,16 +138,11 @@ void ClapTrap::beRepaired(unsigned int amount)
     }
 
     this->EnergyPoints--;
-    if (amount > INT_MAX)
-    {
-        std::cout << M << "Invalid repair amount!" << RST << std::endl;
-        return;
-    }
-
     if (this->HitPoints <= 0)
     {
         std::cout << M << "ClapTrap " << this->Name 
-            << " cannot be repaired, because they are already dead!" << RST << std::endl;
+            << " cannot be repaired, because they are already dead!" 
+                << RST << std::endl;
         return;
     }
 
@@ -152,6 +153,49 @@ void ClapTrap::beRepaired(unsigned int amount)
     }
 
     std::cout << G << "ClapTrap " << this->Name << " was repaired for " << amount 
-        << " hit points. And now they have " << this->HitPoints << " hit points!" << RST << std::endl;
+        << " hit points. And now they have " 
+            << this->HitPoints << " hit points!" << RST << std::endl;
+}
+
+// ###########################  Getters and Setters ###########################
+
+std::string ClapTrap::getName() const
+{
+    return this->Name;
+}
+
+int ClapTrap::getHitPoints() const
+{
+    return this->HitPoints;
+}
+
+int ClapTrap::getEnergyPoints() const
+{
+    return this->EnergyPoints;
+}
+
+int ClapTrap::getAttackDamage() const
+{
+    return this->AttackDamage;
+}
+
+void ClapTrap::setName(std::string name)
+{
+    this->Name = name;
+}
+
+void ClapTrap::setHitPoints(int hitPoints)
+{
+    this->HitPoints = hitPoints;
+}
+
+void ClapTrap::setEnergyPoints(int energyPoints)
+{
+    this->EnergyPoints = energyPoints;
+}
+
+void ClapTrap::setAttackDamage(int attackDamage)
+{
+    this->AttackDamage = attackDamage;
 }
 
